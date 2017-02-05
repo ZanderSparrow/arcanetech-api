@@ -18,9 +18,7 @@ class EntriesController < ApplicationController
   def create
     @entry = current_user.entries.build(entry_params)
     if @entry.save
-      render json: @entry, status: 200
-    else
-      render json: @entry.errors, status: :unprocessable_entity
+      render json: @entry, status: 201, location: @entry
     end
   end
 
@@ -53,6 +51,6 @@ class EntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:title)
+      params.require(:entry).permit(:title, :description, :image)
     end
 end
